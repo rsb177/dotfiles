@@ -14,6 +14,10 @@ Plug 'Raimondi/delimitMate'
 Plug 'dense-analysis/ale'
 Plug 'Yggdroot/indentLine'
 Plug 'haishanh/night-owl.vim'
+Plug 'luochen1990/rainbow'
+Plug 'mattn/emmet-vim'
+
+let g:coc_global_extensions = ['coc-json', 'coc-xml', 'coc-python', 'coc-html', 'coc-tsserver', 'coc-vetur', 'coc-emmet', 'coc-spell-checker', 'coc-prettier', 'coc-snippets', 'coc-tailwindcss', 'coc-highlight', 'coc-explorer', 'coc-powershell']
 
 " Initialize plugin system
 call plug#end()
@@ -132,3 +136,9 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
+
+" CoC Explorer
+nmap <C-n> :CocCommand explorer<CR>
+nmap <space>f :CocCommand explorer --preset floating<CR>
+nmap <space>e :CocCommand explorer<CR>
+autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif

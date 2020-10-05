@@ -9,6 +9,9 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     }
 }
 
+. "scripts/menu.ps1"
+
+
 Write-Output "Sup?  I'm an Admin"
 
 # $profileDir = Split-Path -parent $profile
@@ -19,3 +22,4 @@ Write-Output "Sup?  I'm an Admin"
 # Reg import .\rclick-nvim.reg
 # # Mount Ubuntu to U drive for easier navigation
 # New-PSDrive -Name "U" -Root "\\wsl$\Ubuntu" -Persist -PSProvider "FileSystem"
+
