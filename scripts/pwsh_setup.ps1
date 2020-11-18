@@ -21,15 +21,6 @@ function Get-PowershellStatus {
     return $status
 }
 
-# Modules to install
-$modules = (
-    "posh-git",
-    "oh-my-posh",
-    "Terminal-Icons",
-    "PoshColor",
-    "WslInterop"
-)
-
 Get-PowershellStatus
 exit
 
@@ -50,7 +41,6 @@ New-Item -ItemType SymbolicLink `
 # Modules to install
 $modules = (
     "posh-git",
-    "oh-my-posh",
     "Terminal-Icons",
     "PoshColor",
     "WslInterop"
