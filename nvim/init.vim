@@ -1,1 +1,1 @@
-source $HOME/.vim/rich.vim
+source $HOME/dotfiles/nvim/rich.vim

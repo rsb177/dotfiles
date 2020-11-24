@@ -1,6 +1,10 @@
 " Setup python for neovim
-let g:python_host_prog = '~/.pyenv/pyenv-win/versions/2.7/python.exe'
-let g:python3_host_prog = '~/.pyenv/pyenv-win/versions/3.8.5/python.exe'
+if has("win32")
+  let g:python_host_prog = '~/.pyenv/pyenv-win/versions/2.7/python.exe'
+  let g:python3_host_prog = '~/.pyenv/pyenv-win/versions/3.8.5/python.exe'
+else
+  let g:python3_host_prog = '~/.pyenv/versions/3.8.6/bin/python'
+endif
 
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
@@ -16,8 +20,9 @@ Plug 'Yggdroot/indentLine'
 Plug 'haishanh/night-owl.vim'
 Plug 'luochen1990/rainbow'
 Plug 'mattn/emmet-vim'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
-let g:coc_global_extensions = ['coc-json', 'coc-xml', 'coc-python', 'coc-html', 'coc-tsserver', 'coc-vetur', 'coc-emmet', 'coc-spell-checker', 'coc-prettier', 'coc-snippets', 'coc-tailwindcss', 'coc-highlight', 'coc-explorer', 'coc-powershell']
+let g:coc_global_extensions = ['coc-json', 'coc-xml', 'coc-python', 'coc-html', 'coc-go', 'coc-tsserver', 'coc-vetur', 'coc-emmet', 'coc-spell-checker', 'coc-prettier', 'coc-snippets', 'coc-tailwindcss', 'coc-highlight', 'coc-explorer', 'coc-powershell']
 
 " Initialize plugin system
 call plug#end()
@@ -142,3 +147,7 @@ nmap <C-n> :CocCommand explorer<CR>
 nmap <space>f :CocCommand explorer --preset floating<CR>
 nmap <space>e :CocCommand explorer<CR>
 autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+
+" vim-go
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
