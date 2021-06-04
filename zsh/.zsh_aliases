@@ -1,0 +1,12 @@
+if type nvim > /dev/null 2>&1; then
+  alias vi='nvim'
+  alias view='nvim -R'
+  alias vimdiff='nvim -d'
+fi
+if [ "$(command -v exa)" ]; then
+	unalias -m 'll'
+	unalias -m 'lt'
+	alias ll='exa -lbhgF --color always --icons -a --git'
+	alias lt='exa -lbhgF --color always --icons -a -s modified --git'
+fi
+# alias bat='batcat'
