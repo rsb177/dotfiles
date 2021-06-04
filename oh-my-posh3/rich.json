@@ -103,6 +103,17 @@
           }
         },
         {
+          "type": "envvar",
+          "style": "plain",
+          "foreground": "#c678dd",
+          "background": "#2F343F",
+          "properties": {
+            "prefix": " \ue606 ",
+            "postfix": " <#818E8E>\uE0B3</>",
+	    "var_name": "VENV"
+          }
+        },
+        {
           "type": "time",
           "style": "plain",
           "foreground": "#D6D6D6",
