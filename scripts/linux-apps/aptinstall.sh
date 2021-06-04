@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# sudo apt update
+sudo apt update
 
 function aptinstall {
-  type -P $1 &>/dev/null
+  type -p $1 &>/dev/null
 
   if [ $? -ne 0 ]; then
     echo "Installing: ${1}..."
@@ -14,14 +14,8 @@ function aptinstall {
 }
 
 
-declare -A APPS=(
-    ["command"]
-)
-
-aptinstall nvim
-# APPS="neovim bat"
-# for app in $APPS
-# do
-#     install $app
-# done
-
+APPS="neovim bat ripgrep shellcheck"
+for app in $APPS
+do
+    aptinstall $app
+done
