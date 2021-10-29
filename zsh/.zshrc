@@ -1,14 +1,14 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/w503457/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+# ZSH_THEME="robbyrussell"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -100,7 +100,7 @@ export EDITOR='nvim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-source $HOME/.zsh_aliases
+source $HOME/dotfiles/zsh/.zsh_aliases
 
 # Zoxide
 eval "$(zoxide init zsh)"
@@ -109,11 +109,16 @@ eval "$(zoxide init zsh)"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
+  eval "$(pyenv init --path)"
 fi
 
+if command -v oh-my-posh-wsl 1>/dev/null 2>&1; then
+  OH_MY_POSH="oh-my-posh-wsl"
+else
+  OH_MY_POSH="oh-my-posh"
+fi
 function powerline_precmd() {
-    PS1="$(oh-my-posh -config ~/dotfiles/oh-my-posh3/rich.json --error $?)"
+    PS1="$($OH_MY_POSH -config ~/dotfiles/oh-my-posh3/rich.json --error $?)"
 }
 
 function install_powerline_precmd() {
@@ -138,3 +143,14 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
 
 export PATH="$HOME/.poetry/bin:$PATH"
+
+## NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+[[ -r $NVM_DIR/bash_completion ]] && \. $NVM_DIR/bash_completion
+# Unbind the escape-/ binding because it gets triggered when I try to do a history search with "/".
+# Must be set after the nvim bash_completion
+bindkey -r "^[/"
+
+# Created by `pipx` on 2021-10-25 15:18:25
+export PATH="$PATH:/home/rsb177/.local/bin"

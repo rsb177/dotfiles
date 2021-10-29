@@ -14,7 +14,7 @@ function aptinstall {
 }
 
 
-APPS="neovim bat ripgrep shellcheck"
+APPS="bat ripgrep shellcheck zsh"
 for app in $APPS
 do
     aptinstall $app

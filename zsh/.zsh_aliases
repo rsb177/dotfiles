@@ -1,3 +1,6 @@
+if type nvim.appimage > /dev/null 2>&1; then
+  alias nvim='nvim.appimage'
+fi
 if type nvim > /dev/null 2>&1; then
   alias vi='nvim'
   alias view='nvim -R'
@@ -10,3 +13,4 @@ if [ "$(command -v exa)" ]; then
 	alias lt='exa -lbhgF --color always --icons -a -s modified --git'
 fi
 # alias bat='batcat'
+alias fd='fdfind'
