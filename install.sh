@@ -4,7 +4,7 @@
 
 
 
-./scripts/aptinstall.sh
+./scripts/linux-apps/aptinstall.sh
 ./scripts/nvim/setup.sh
 
 

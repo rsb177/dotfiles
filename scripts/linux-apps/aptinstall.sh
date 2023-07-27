@@ -14,7 +14,7 @@ function aptinstall {
 }
 
 
-APPS="bat ripgrep shellcheck zsh"
+APPS="bat ripgrep shellcheck zsh direnv unzip"
 for app in $APPS
 do
     aptinstall $app
