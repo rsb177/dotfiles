@@ -10,3 +10,4 @@ cargo install bottom
 cargo install fd-find
 cargo install lsd
 cargo install stylua
+cargo install bob-nvim

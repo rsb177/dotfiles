@@ -101,8 +101,6 @@ export EDITOR='nvim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-source $HOME/dotfiles/zsh/.zsh_aliases
-
 bindkey -v
 
 
@@ -130,3 +128,9 @@ eval "$(zoxide init zsh)"
 
 ## Go
 export PATH=$PATH:/usr/local/go/bin
+
+## bob/neovim
+export PATH=$PATH:/home/rsb177/.local/share/bob/nvim-bin
+
+source $HOME/dotfiles/zsh/.zsh_aliases
+
