@@ -5,7 +5,7 @@ return {
       pathStrict = false,
       library = {
         enabled = true,
-        plugins = { 'null-ls' }
+        plugins = { 'none-ls' }
       }
     },
   },
@@ -31,11 +31,11 @@ return {
         dependencies = {
           "onsails/lspkind.nvim",
         },
-      }, -- Required
-      { "hrsh7th/cmp-nvim-lsp" }, -- Required
-      { "L3MON4D3/LuaSnip" }, -- Required
+      },                                    -- Required
+      { "hrsh7th/cmp-nvim-lsp" },           -- Required
+      { "L3MON4D3/LuaSnip" },               -- Required
 
-      { "j-hui/fidget.nvim", opts = {} }, -- Optional
+      { "j-hui/fidget.nvim",   opts = {} }, -- Optional
       -- Additional lua configuration, makes nvim stuff amazing!
     },
     config = function()
@@ -99,10 +99,17 @@ return {
         }),
         formatting = {
           format = lspkind.cmp_format({
-            mode = "symbol", -- show only symbol annotations
-            maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+            -- mode = "symbol", -- show only symbol annotations
+            maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
             ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
           }),
+        },
+        sources = {
+          { name = "copilot",  group_index = 1 },
+          { name = "nvim_lsp", max_item_count = 20, group_index = 1 },
+          { name = "path",     max_item_count = 5,  group_index = 2 },
+          { name = "buffer",   keyword_length = 2,  max_item_count = 5, group_index = 2 },
+          { name = "luasnip" },
         },
       })
     end,
@@ -118,7 +125,7 @@ return {
     end,
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "mason.nvim" },
     opts = function()
@@ -130,26 +137,26 @@ return {
           nls.builtins.formatting.shfmt,
           nls.builtins.formatting.black,
           nls.builtins.formatting.isort,
-          nls.builtins.formatting.ruff,
+          -- nls.builtins.formatting.ruff,
           nls.builtins.formatting.packer,
           nls.builtins.formatting.prettierd,
-          nls.builtins.formatting.taplo,
+          -- nls.builtins.formatting.taplo,
           nls.builtins.formatting.terraform_fmt,
-          nls.builtins.diagnostics.action_lint,
+          -- nls.builtins.diagnostics.action_lint,
           nls.builtins.diagnostics.cfn_lint,
         },
       }
     end,
   },
   {
-    "glepnir/lspsaga.nvim",
+    "nvimdev/lspsaga.nvim",
     event = "LspAttach",
     config = function()
       require("lspsaga").setup({})
 
       vim.keymap.set({ "n", "x" }, "<Leader>ca", "<cmd>Lspsaga code_action<CR>", { desc = "LSP: [c]ode [a]ction" })
-      vim.keymap.set("n","gd", "<cmd>Lspsaga goto_definition<CR>", { desc = "LSP: [g]oto [d]efinition" })
-      vim.keymap.set("n","gp", "<cmd>Lspsaga peek_definition<CR>", { desc = "LSP: Peek Definition" })
+      vim.keymap.set("n", "gd", "<cmd>Lspsaga goto_definition<CR>", { desc = "LSP: [g]oto [d]efinition" })
+      vim.keymap.set("n", "gp", "<cmd>Lspsaga peek_definition<CR>", { desc = "LSP: Peek Definition" })
     end,
     dependencies = {
       { "nvim-tree/nvim-web-devicons" },
@@ -157,4 +164,10 @@ return {
       { "nvim-treesitter/nvim-treesitter" },
     },
   },
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "VeryLazy",
+    opts = { always_trigger = true},
+    config = function(_, opts) require 'lsp_signature'.setup(opts) end
+  }
 }

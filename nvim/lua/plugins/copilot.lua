@@ -1,16 +1,28 @@
 return {
-  "zbirenbaum/copilot.lua",
-  cmd = "Copilot",
-  event = "InsertEnter",
-  config = function()
-    require("copilot").setup({
-      panel = {
-        keymap = {
-          jump_prev = "<Leader>p",
-          jump_next = "<Leader>n",
-          open = "<C-CR>"
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    build = ":Copilot auth",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = {
+          auto_trigger = true,
         }
-      },
-    })
-  end,
+        -- panel = {
+        --   keymap = {
+        --     jump_prev = "<Leader>p",
+        --     jump_next = "<Leader>n",
+        --     open = "<C-CR>"
+        --   }
+        -- },
+      })
+    end,
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    config = function()
+      require("copilot_cmp").setup()
+    end
+  }
 }

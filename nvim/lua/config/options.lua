@@ -45,6 +45,14 @@ o.signcolumn = "yes"
 -- Set completeopt to have a better completion experience
 o.completeopt = "menuone,noselect,longest"
 
+-- for : stuff
+vim.opt.wildmode = "list:longest,list:full"
+opt.wildignore:append({ ".javac", "node_modules", "*.pyc" })
+opt.wildignore:append({
+  ".o", ".obj", ".dll", ".exe", ".so", ".a", ".lib", ".pyc", ".pyo", ".pyd",
+  ".swp", ".swo", ".class", ".DS_Store", ".git", ".hg", ".orig"
+})
+
 -- make splits open to down and right
 -- opt.splitbelow = true
 -- opt.splitright = true
@@ -70,14 +78,17 @@ for _, plugin in pairs(disabled_built_ins) do
   g["loaded_" .. plugin] = 1
 end
 
--- o.clipboard = "unnamedplus"
-
-g.clipboard = {
-  name = "WslClipboard",
-  copy = { ["+"] = { "clip.exe" }, ["*"] = { "clip.exe" } },
-  paste = {
-    ["+"] = { "powershell.exe Get-Clipboard | tr -d '\r' | sed -z '$ s/\n$//'" },
-    ["*"] = { "powershell.exe Get-Clipboard | tr -d '\r' | sed -z '$ s/\n$//'" },
-  },
-  cache_enabled = true,
-}
+local in_wsl = os.getenv('WSL_DISTRO_NAME') ~= nil
+if in_wsl then
+  g.clipboard = {
+    name = "WslClipboard",
+    copy = { ["+"] = { "clip.exe" }, ["*"] = { "clip.exe" } },
+    paste = {
+      ["+"] = { "powershell.exe Get-Clipboard | tr -d '\r' | sed -z '$ s/\n$//'" },
+      ["*"] = { "powershell.exe Get-Clipboard | tr -d '\r' | sed -z '$ s/\n$//'" },
+    },
+    cache_enabled = true,
+  }
+else
+  o.clipboard = "unnamedplus"
+end

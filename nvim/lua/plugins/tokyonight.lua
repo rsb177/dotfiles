@@ -11,13 +11,13 @@ return {
       },
     },
     config = function()
-      require("tokyonight").setup({
+      require("tokyonight").load({
         style = "moon",
-        styles = {
-          comments = "italic",
-          sidebars = "dark",
-          floats = "dark",
-        },
+        -- styles = {
+        --   comments = "italic",
+        --   sidebars = "dark",
+        --   floats = "dark",
+        -- },
         sidebars = { "qf", "help" },
         on_colors = function(colors)
           colors.hint = colors.orange
@@ -59,7 +59,7 @@ return {
           -- }
         end,
       })
-      vim.cmd("colorscheme tokyonight")
+      -- vim.cmd("colorscheme tokyonight")
     end,
   },
 }

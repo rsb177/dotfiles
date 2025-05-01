@@ -128,9 +128,28 @@ eval "$(zoxide init zsh)"
 
 ## Go
 export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
 
 ## bob/neovim
 export PATH=$PATH:/home/rsb177/.local/share/bob/nvim-bin
 
 source $HOME/dotfiles/zsh/.zsh_aliases
 
+
+# fnm
+export PATH="/Users/w503457/Library/Application Support/fnm:$PATH"
+eval "`fnm env`"
+
+# Created by `pipx` on 2024-01-02 14:26:53
+export PATH="$PATH:/Users/w503457/.local/bin"
+
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/w503457/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

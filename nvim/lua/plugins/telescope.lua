@@ -1,15 +1,20 @@
 return {
   {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.1",
+    tag = "0.1.4",
     dependencies = { "nvim-lua/plenary.nvim", "debugloop/telescope-undo.nvim" },
     keys = {
-      { "<leader>fb", "<cmd>:Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
-      { "<leader>ff", "<cmd>:Telescope find_files hidden=true<cr>", desc = "Find Files" },
-      { "<leader>fr", "<cmd>:Telescope live_grep<cr>", desc = "Grep Files" },
-      { "<leader>fs", "<cmd>:Telescope current_buffer_fuzzy_find<cr>", desc = "Grep Buffer" },
-      { "<leader>fk", "<cmd>:Telescope keymaps<cr>", desc = "Keymaps" },
-      { "<leader>u", "<cmd>:Telescope undo<cr>", desc = "Undo" },
+      { "<leader>fb", "<cmd>:Telescope buffers show_all_buffers=true<cr>",         desc = "Switch Buffer" },
+      { "<leader>ff", "<cmd>:Telescope find_files hidden=true no_ignore=true<cr>", desc = "Find Files" },
+      { "<leader>fr", "<cmd>:Telescope live_grep<cr>",                             desc = "Grep Files" },
+      { "<leader>fs", "<cmd>:Telescope current_buffer_fuzzy_find<cr>",             desc = "Grep Buffer" },
+      { "<leader>fk", "<cmd>:Telescope keymaps<cr>",                               desc = "Keymaps" },
+      { "<leader>u",  "<cmd>:Telescope undo<cr>",                                  desc = "Undo" },
+    },
+    pickers = {
+      find_files = {
+        no_ignore = true
+      }
     },
     config = function()
       local telescope = require("telescope")
@@ -23,6 +28,7 @@ return {
       -- I don't want to search in the `.git` directory.
       table.insert(vimgrep_arguments, "--glob")
       table.insert(vimgrep_arguments, "!**/.git/*")
+      table.insert(vimgrep_arguments, "!**/.venv/*")
       telescope.setup({
         extensions = {
           undo = {},
@@ -44,7 +50,7 @@ return {
           prompt_prefix = "   ",
           selection_caret = "ﰲ ",
           path_display = { "smart" },
-          file_ignore_patterns = { ".git/", "node_modules" },
+          file_ignore_patterns = { ".git/", "node_modules", ".venv", "venv", "__pycache__", "*.pyc", ".DS_Store" },
         },
       })
       require("telescope").load_extension("undo")
