@@ -25,7 +25,7 @@ Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 # Fix PS color scheme for dark backgrounds
 Set-PSReadLineOption -Colors @{ "Operator"="Magenta" }
 Set-PSReadLineOption -Colors @{ "Parameter"="Magenta" }
-Set-Theme Rich
+# Set-Theme Rich
 
 # Chocolatey profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
@@ -105,4 +105,5 @@ if (Test-Path $ProfilePath/Aliases.ps1) {
   $global:LASTEXITCODE = $realLASTEXITCODE
   Remove-Variable realLASTEXITCODE -Confirm:$false
 }
-Set-Item -Path Function:prompt -Value $Prompt -Force
+# Set-Item -Path Function:prompt -Value $Prompt -Force
+oh-my-posh --init --shell pwsh --config ~/dotfiles/oh-my-posh3/rich.json | Invoke-Expression

@@ -29,6 +29,9 @@ New-Item -ItemType SymbolicLink `
     -Path "$HOME\Documents\Powershell\Microsoft.PowerShell_profile.ps1" `
     -Target "$HOME\dotfiles\powershell\Microsoft.PowerShell_profile.ps1"
 New-Item -ItemType SymbolicLink `
+    -Path "$HOME\Documents\WindowsPowershell\Microsoft.PowerShell_profile.ps1" `
+    -Target "$HOME\dotfiles\powershell\Microsoft.PowerShell_profile.ps1"
+New-Item -ItemType SymbolicLink `
     -Path "$HOME\Documents\Powershell\Aliases.ps1" `
     -Target "$HOME\dotfiles\powershell\Aliases.ps1"
 New-Item -ItemType SymbolicLink `
