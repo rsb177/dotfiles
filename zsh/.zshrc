@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -114,13 +114,13 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 ## Poetry Setup
-export PATH="/home/rsb177/.local/bin:$PATH"
+# export PATH="~/.local/bin:$PATH"
 
 ## Direnv
 eval "$(direnv hook zsh)"
 
 # fnm
-export PATH="/home/rsb177/.local/share/fnm:$PATH"
+export PATH="$HOME/.local/share/fnm:$PATH"
 eval "`fnm env`"
 
 ## Zoxide
@@ -132,24 +132,15 @@ export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
 ## bob/neovim
-export PATH=$PATH:/home/rsb177/.local/share/bob/nvim-bin
+export PATH=$PATH:$HOME/.local/share/bob/nvim-bin
 
 source $HOME/dotfiles/zsh/.zsh_aliases
 
 
-# fnm
-export PATH="/Users/w503457/Library/Application Support/fnm:$PATH"
-eval "`fnm env`"
+# # fnm
+# FNM_PATH="~/.local/share/fnm"
+# if [ -d "$FNM_PATH" ]; then
+#   export PATH="~/.local/share/fnm:$PATH"
+#   eval "`fnm env`"
+# fi
 
-# Created by `pipx` on 2024-01-02 14:26:53
-export PATH="$PATH:/Users/w503457/.local/bin"
-
-export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
-
-# pnpm
-export PNPM_HOME="/Users/w503457/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
