@@ -53,12 +53,14 @@ return {
           vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
         end, { buffer = bufnr, desc = "LSP: Format code" })
       end)
-      lsp.ensure_installed({
-        "tsserver",
-        "eslint",
-        "pyright",
-        "ruff_lsp",
-        "tflint",
+      require('mason-lspconfig').setup({
+        ensure_installed = {
+          "lua_ls",
+          "eslint",
+          "pyright",
+          "ruff_lsp",
+          "tflint",
+        }
       })
 
       local opts = {
