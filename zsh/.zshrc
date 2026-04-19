@@ -109,11 +109,6 @@ eval "$(oh-my-posh init zsh --config ~/dotfiles/oh-my-posh3/rich.json)"
 # eval "$(oh-my-posh init zsh --config ~/.poshthemes/tokyonight_storm.omp.json)"
 # eval "$(starship init zsh)"
 
-## Pyenv setup
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
 ## Poetry Setup
 # export PATH="~/.local/bin:$PATH"
 
@@ -132,6 +127,9 @@ export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
+## Rust
+export PATH=$PATH:$HOME/.cargo/bin
+
 ## bob/neovim
 export PATH=$PATH:$HOME/.local/share/bob/nvim-bin
 
@@ -145,4 +143,4 @@ source $HOME/dotfiles/zsh/.zsh_aliases
 #   eval "`fnm env`"
 # fi
 
-eval $(/opt/homebrew/bin/brew shellenv)
+# eval $(/opt/homebrew/bin/brew shellenv)
