@@ -1,109 +1,86 @@
 return {
+  { "folke/neoconf.nvim", opts = {} },
   {
-    "folke/neodev.nvim",
+    "williamboman/mason.nvim",
+    build = ":MasonUpdate",
+    opts = {},
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = { "williamboman/mason.nvim" },
     opts = {
-      pathStrict = false,
-      library = {
-        enabled = true,
-        plugins = { 'none-ls' }
-      }
+      ensure_installed = {
+        "eslint",
+        "lua_ls",
+        "pyright",
+        "tflint",
+      },
     },
   },
-  { "folke/neoconf.nvim" },
   {
-    "VonHeikemen/lsp-zero.nvim",
-    branch = "v2.x",
+    "neovim/nvim-lspconfig",
     dependencies = {
-      -- LSP Support
-      { "neovim/nvim-lspconfig" }, -- Required
-      {
-        -- Optional
-        "williamboman/mason.nvim",
-        build = function()
-          pcall(vim.cmd, "MasonUpdate")
-        end,
-      },
-      { "williamboman/mason-lspconfig.nvim" }, -- Optional
-
-      -- Autocompletion
-      {
-        "hrsh7th/nvim-cmp",
-        dependencies = {
-          "onsails/lspkind.nvim",
-        },
-      },                                    -- Required
-      { "hrsh7th/cmp-nvim-lsp" },           -- Required
-      { "L3MON4D3/LuaSnip" },               -- Required
-
-      { "j-hui/fidget.nvim",   opts = {} }, -- Optional
-      -- Additional lua configuration, makes nvim stuff amazing!
+      "williamboman/mason-lspconfig.nvim",
+      "hrsh7th/cmp-nvim-lsp",
+      { "j-hui/fidget.nvim", opts = {} },
     },
     config = function()
-      local lsp = require("lsp-zero").preset({
-        manage_nvim_cmp = {
-          set_sources = "recommended",
-          set_extra_mappings = true,
+      vim.lsp.config("*", {
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+      })
+
+      vim.lsp.config("lua_ls", {
+        settings = {
+          Lua = {
+            workspace = { checkThirdParty = false },
+            telemetry = { enable = false },
+          },
         },
       })
 
-      lsp.on_attach(function(client, bufnr)
-        lsp.default_keymaps({ buffer = bufnr })
-
-        vim.keymap.set({ "n", "x" }, "<A-S-f>", function()
-          vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
-        end, { buffer = bufnr, desc = "LSP: Format code" })
-      end)
-      require('mason-lspconfig').setup({
-        ensure_installed = {
-          "lua_ls",
-          "eslint",
-          "pyright",
-          "ruff_lsp",
-          "tflint",
-        }
-      })
-
-      local opts = {
-        servers = {
-          pyright = {
-            settings = {
-              python = {
-                analysis = {
-                  typeCheckingMode = "off",
-                  autoSearchPaths = true,
-                  useLibraryCodeForTypes = true,
-                  diagnosticMode = "workspace",
-                },
-              },
-            },
-          },
-          ruff_lsp = {
-            init_options = {
-              settings = {
-                args = { "--max-line-length=80" },
-              },
+      vim.lsp.config("pyright", {
+        settings = {
+          python = {
+            analysis = {
+              typeCheckingMode = "off",
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = "workspace",
             },
           },
         },
-      }
-      -- (Optional) Configure lua language server for neovim
-      require("lspconfig").lua_ls.setup(lsp.nvim_lua_ls(opts))
+      })
 
-      lsp.setup()
+      vim.lsp.enable({ "eslint", "lua_ls", "pyright", "tflint" })
+
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(ev)
+          vim.keymap.set({ "n", "x" }, "<A-S-f>", function()
+            vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+          end, { buffer = ev.buf, desc = "LSP: Format code" })
+        end,
+      })
+    end,
+  },
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "L3MON4D3/LuaSnip",
+      "onsails/lspkind.nvim",
+    },
+    config = function()
       local cmp = require("cmp")
       local lspkind = require("lspkind")
       cmp.setup({
         preselect = "item",
         mapping = cmp.mapping.preset.insert({
-          -- ["<Tab>"] = cmp_action.tab_complete(),
-          -- ["<S-Tab>"] = cmp_action.select_prev_or_fallback(),
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
         }),
         formatting = {
           format = lspkind.cmp_format({
-            -- mode = "symbol", -- show only symbol annotations
-            maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-            ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+            maxwidth = 50,
+            ellipsis_char = "...",
           }),
         },
         sources = {
@@ -120,31 +97,28 @@ return {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
-      { "<leader>dt", "<cmd>: TroubleToggle document_diagnostics<cr>", desc = "Toggle Diagnostics" },
+      { "<leader>dt", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Toggle Diagnostics" },
     },
-    config = function()
-      require("trouble").setup({})
-    end,
+    opts = {},
   },
   {
     "nvimtools/none-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    dependencies = { "mason.nvim" },
+    dependencies = { "williamboman/mason.nvim" },
     opts = function()
       local nls = require("null-ls")
       return {
-        root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
+        root_dir = require("null-ls.utils").root_pattern(
+          ".null-ls-root", ".neoconf.json", "Makefile", ".git"
+        ),
         sources = {
           nls.builtins.formatting.stylua,
           nls.builtins.formatting.shfmt,
           nls.builtins.formatting.black,
           nls.builtins.formatting.isort,
-          -- nls.builtins.formatting.ruff,
           nls.builtins.formatting.packer,
           nls.builtins.formatting.prettierd,
-          -- nls.builtins.formatting.taplo,
           nls.builtins.formatting.terraform_fmt,
-          -- nls.builtins.diagnostics.action_lint,
           nls.builtins.diagnostics.cfn_lint,
         },
       }
@@ -153,23 +127,21 @@ return {
   {
     "nvimdev/lspsaga.nvim",
     event = "LspAttach",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "nvim-treesitter/nvim-treesitter",
+    },
     config = function()
       require("lspsaga").setup({})
-
       vim.keymap.set({ "n", "x" }, "<Leader>ca", "<cmd>Lspsaga code_action<CR>", { desc = "LSP: [c]ode [a]ction" })
       vim.keymap.set("n", "gd", "<cmd>Lspsaga goto_definition<CR>", { desc = "LSP: [g]oto [d]efinition" })
       vim.keymap.set("n", "gp", "<cmd>Lspsaga peek_definition<CR>", { desc = "LSP: Peek Definition" })
     end,
-    dependencies = {
-      { "nvim-tree/nvim-web-devicons" },
-      --Please make sure you install markdown and markdown_inline parser
-      { "nvim-treesitter/nvim-treesitter" },
-    },
   },
   {
     "ray-x/lsp_signature.nvim",
     event = "VeryLazy",
-    opts = { always_trigger = true},
-    config = function(_, opts) require 'lsp_signature'.setup(opts) end
-  }
+    opts = { always_trigger = true },
+    config = function(_, opts) require("lsp_signature").setup(opts) end,
+  },
 }
