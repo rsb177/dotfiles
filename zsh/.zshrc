@@ -144,3 +144,8 @@ source $HOME/dotfiles/zsh/.zsh_aliases
 # fi
 
 # eval $(/opt/homebrew/bin/brew shellenv)
+
+# Forward WSL localhost:27124 to Windows host for Obsidian REST API
+if grep -qi microsoft /proc/version 2>/dev/null && ! pgrep -f "socat.*27124" > /dev/null 2>&1; then
+  socat TCP-LISTEN:27124,fork,reuseaddr TCP:172.22.240.1:27124 &>/dev/null &
+fi
