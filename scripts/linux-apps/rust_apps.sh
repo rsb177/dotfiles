@@ -1,13 +1,26 @@
 # install rust
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+if ! command -v rustup &>/dev/null; then
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+else
+    echo "rustup already installed, skipping"
+fi
 
-sudo apt install gcc cmake
+type -p gcc &>/dev/null || sudo apt install -y gcc
+type -p cmake &>/dev/null || sudo apt install -y cmake
 
-cargo install exa
-cargo install zoxide
-cargo install tealdeer
-cargo install bottom
-cargo install fd-find
-cargo install lsd
-cargo install stylua
-cargo install bob-nvim
+cargo_install() {
+    if ! cargo install --list | grep -q "^$1 "; then
+        cargo install "$1"
+    else
+        echo "Already installed: $1"
+    fi
+}
+
+cargo_install exa
+cargo_install zoxide
+cargo_install tealdeer
+cargo_install bottom
+cargo_install fd-find
+cargo_install lsd
+cargo_install stylua
+cargo_install bob-nvim

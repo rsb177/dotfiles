@@ -1,10 +1,16 @@
 #!/bin/bash
 
 type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
-sudo apt-add-repository https://cli.github.com/packages
-&& sudo add-apt-repository ppa:git-core/ppa \
-&& sudo apt update \
-&& sudo apt upgrade git
+
+if ! apt-cache policy | grep -q "cli.github.com"; then
+    sudo apt-add-repository https://cli.github.com/packages
+fi
+
+if ! apt-cache policy | grep -q "git-core/ppa"; then
+    sudo add-apt-repository ppa:git-core/ppa
+fi
+
+sudo apt update && sudo apt upgrade git -y
 
 function aptinstall {
   type -p $1 &>/dev/null

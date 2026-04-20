@@ -2,8 +2,12 @@
 
 set -e
 
-echo "Installing uv"
-curl -LsSf https://astral.sh/uv/install.sh | sh
+if ! command -v uv &>/dev/null; then
+    echo "Installing uv"
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+else
+    echo "uv already installed, skipping"
+fi
 
 export PATH="$HOME/.local/bin:$PATH"
 

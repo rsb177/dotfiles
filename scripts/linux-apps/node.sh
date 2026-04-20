@@ -1,7 +1,11 @@
 #!/bin/bash
 
-echo "Installing fnm"
-curl -fsSL https://fnm.vercel.app/install | bash
+if ! command -v fnm &>/dev/null; then
+    echo "Installing fnm"
+    curl -fsSL https://fnm.vercel.app/install | bash
+else
+    echo "fnm already installed, skipping"
+fi
 
 export PATH="$HOME/.local/share/fnm:$PATH"
 eval "$(fnm env)"
