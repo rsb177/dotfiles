@@ -1,5 +1,6 @@
 $packages = @(
-    "eza-community.eza"
+    "eza-community.eza",
+    "JanDeDobbeleer.OhMyPosh"
 )
 
 $packages | ForEach-Object {
