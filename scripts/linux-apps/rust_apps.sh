@@ -16,7 +16,7 @@ cargo_install() {
     fi
 }
 
-cargo_install exa
+cargo_install eza
 cargo_install zoxide
 cargo_install tealdeer
 cargo_install bottom

@@ -2,11 +2,11 @@
 New-Alias -Name vi -Value nvim -Force
 New-Alias -Name vim -Value nvim -Force
 
-# EXA/LS
-Function exa_ll { exa -lbGhgF --color always --icons -a --git }
-Function exa_ls { exa -lbGhgF --color auto --icons -a -s type --git }
-New-Alias -Name ll -Value Get-ChildItem -Force
-New-Alias -Name ls -Value Get-ChildItem -Force
+# EZA/LS
+Function ll { eza -lbGhgF --color always --icons -a --git @args }
+Function ls { eza -lbGhgF --color auto --icons -a -s type --git @args }
+Remove-Alias -Name ll -Force -ErrorAction SilentlyContinue
+Remove-Alias -Name ls -Force -ErrorAction SilentlyContinue
 
 # Poetry
 function poetry_shell() {
